@@ -1,93 +1,142 @@
-import React, { Children, useState } from "react";
+import React from "react";
 import "./App.css";
-import {
-  Formik,
-  Field,
-  Form,
-  ErrorMessage,
-  FormikConfig,
-  FormikValues,
-} from "formik";
-import { Button, TextField } from "@material-ui/core";
+import { Field, ErrorMessage } from "formik";
+import { TextField, Card, CardContent } from "@material-ui/core";
+import { FormikStepper, FormikStep } from "./FormikStepper/FormikStepper";
 import * as Yup from "yup";
+
+const sleep = (time: number) => new Promise((acc) => setTimeout(acc, time));
 
 function App() {
   return (
-    <FormikStepper
-      initialValues={{
-        firstName: "",
-        lastName: "",
-        school: "",
-        email: "",
-      }}
-      onSubmit={() => {}}
-    >
-      <FormikStep
-        // validationSchema={Yup.object({
-        //   firstName: Yup.string().required("Required !"),
-        //   lastName: Yup.string().required("Required !"),
-        // })}
-      >
-        <Field name="firstName" component={TextField} label="firstName" />
-        <ErrorMessage name="firstName" />
-        <Field name="lastName" component={TextField} label="lastName" />
-        <ErrorMessage name="lastName" />
-      </FormikStep>
-      <FormikStep>
-        <Field name="school" component={TextField} label="school" />
-        <ErrorMessage name="school" />
-      </FormikStep>
-      <FormikStep>
-        <Field name="email" component={TextField} label="email" />
-        <ErrorMessage name="email" />
-      </FormikStep>
-    </FormikStepper>
+    <div className="wrapper">
+      <nav>
+        <Card>
+          <CardContent></CardContent>
+        </Card>
+      </nav>
+      <Card className="form-card">
+        <CardContent>
+          <FormikStepper
+            initialValues={{
+              firstName: "",
+              lastName: "",
+              fatherName: "",
+              age: 0,
+              address: "",
+              school: "",
+              college: "",
+              university: "",
+              mobileNumber: 0,
+              email: "",
+              postalCode: "",
+            }}
+            onSubmit={async (values) => {
+              await sleep(3000);
+              console.log("Values >>", values);
+            }}
+          >
+            <FormikStep
+              label="Personal info"
+              validationSchema={Yup.object({
+                // firstName: Yup.string().required("Required !"),
+                // lastName: Yup.string().required("Required !"),
+              })}
+            >
+              <Field
+                name="firstName"
+                component={TextField}
+                label="First Name"
+                className="field"
+              />
+              <ErrorMessage name="firstName" />
+              <Field
+                className="field"
+                name="lastName"
+                component={TextField}
+                label="Last Name"
+              />
+              <ErrorMessage name="lastName" />
+              <Field
+                className="field"
+                name="fatherName"
+                component={TextField}
+                label="Father Name"
+              />
+              <ErrorMessage name="fatherName" />
+              <Field
+                className="field"
+                name="age"
+                type="number"
+                component={TextField}
+                label="Age"
+              />
+              <ErrorMessage name="age" />
+              <Field
+                className="field"
+                fullWidth
+                name="address"
+                component={TextField}
+                label="Address"
+              />
+              <ErrorMessage name="address" />
+            </FormikStep>
+            <FormikStep label="Education Info">
+              <Field
+                className="field"
+                fullWidth
+                name="school"
+                component={TextField}
+                label="School Name"
+              />
+              <ErrorMessage name="school" />
+              <Field
+                className="field"
+                fullWidth
+                name="college"
+                component={TextField}
+                label="College Name"
+              />
+              <ErrorMessage name="college" />
+              <Field
+                className="field"
+                fullWidth
+                name="university"
+                component={TextField}
+                label="University Name"
+              />
+              <ErrorMessage name="university" />
+            </FormikStep>
+            <FormikStep label="Contact Info">
+              <Field
+                className="field"
+                name="email"
+                component={TextField}
+                label="Email Address"
+              />
+              <ErrorMessage name="email" />
+              <Field
+                className="field"
+                type="number"
+                name="mobileNumber"
+                component={TextField}
+                label="Mobile Number"
+              />
+              <ErrorMessage name="mobileNumber" />
+              <Field
+                fullWidth
+                className="field"
+                name="postalCode"
+                component={TextField}
+                label="Postal Code"
+              />
+              <ErrorMessage name="postalCode" />
+            </FormikStep>
+          </FormikStepper>
+        </CardContent>
+      </Card>
+    </div>
   );
 }
 
 export default App;
-
-export interface FormikStepProps
-  extends Pick<FormikConfig<FormikValues>, "children" | "validationSchema"> {}
-
-export function FormikStep({ children, ...props }: FormikStepProps) {
-  return <>{children}</>;
-}
-
-export function FormikStepper({
-  children,
-  ...props
-}: FormikConfig<FormikValues>) {
-  const childrenArray = Children.toArray(
-    children
-  ) as React.ReactElement<FormikStepProps>[];
-  const [step, setStep] = useState(0);
-  const currentChild = childrenArray[step];
-  console.log(currentChild);
-
-  const isLastStep = () => {
-    return step === childrenArray.length - 1;
-  };
-
-  return (
-    <Formik
-      {...props}
-      validationSchema={currentChild.props.validationSchema}
-      onSubmit={async (values, helpers) => {
-        if (isLastStep()) {
-          await props.onSubmit(values, helpers);
-        } else {
-          setStep((s) => s + 1);
-        }
-      }}
-    >
-      <Form autoComplete="off">
-        {currentChild}{" "}
-        {step > 0 ? (
-          <Button onClick={() => setStep((s) => s - 1)}>Back</Button>
-        ) : null}
-        <Button type="submit">{isLastStep() ? "Submit" : "Next"}</Button>
-      </Form>
-    </Formik>
-  );
-}

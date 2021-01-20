@@ -1,0 +1,18 @@
+.MuiStepIcon-root.MuiStepIcon-active {
+  color: rgb(79, 223, 79) !important;
+}
+.MuiStepIcon-root.MuiStepIcon-completed {
+  color: rgb(79, 223, 79) !important;
+}
+.MuiStepIcon-text {
+  fill: rgb(255, 255, 255) !important;
+  font-size: 0.75rem;
+  font-weight: bold !important;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+}
+.button {
+  color: rgb(255, 255, 255) !important;
+  background-color: rgb(79, 223, 79) !important;
+  margin-right: 10px !important;
+  margin-top: 30px !important;
+}
