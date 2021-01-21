@@ -1,6 +1,6 @@
 import React from "react";
 import "./App.css";
-import { Field, ErrorMessage } from "formik";
+import { Field} from "formik";
 import { Card, CardContent, Typography } from "@material-ui/core";
 import { FormikStepper, FormikStep } from "./FormikStepper/FormikStepper";
 import { TextField } from "formik-material-ui";
