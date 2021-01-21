@@ -1,8 +1,9 @@
 import React from "react";
 import "./App.css";
 import { Field, ErrorMessage } from "formik";
-import { TextField, Card, CardContent, Typography } from "@material-ui/core";
+import { Card, CardContent, Typography } from "@material-ui/core";
 import { FormikStepper, FormikStep } from "./FormikStepper/FormikStepper";
+import { TextField } from "formik-material-ui";
 import * as Yup from "yup";
 
 const sleep = (time: number) => new Promise((acc) => setTimeout(acc, time));
@@ -27,14 +28,13 @@ function App() {
               firstName: "",
               lastName: "",
               fatherName: "",
-              age: 0,
+              age: "",
               address: "",
               school: "",
               college: "",
               university: "",
-              mobileNumber: 0,
+              mobileNumber: "",
               email: "",
-              postalCode: "",
             }}
             onSubmit={async (values) => {
               await sleep(3000);
@@ -46,6 +46,9 @@ function App() {
               validationSchema={Yup.object({
                 firstName: Yup.string().required("Required !"),
                 lastName: Yup.string().required("Required !"),
+                fatherName: Yup.string().required("Required !"),
+                age: Yup.string().required("Required !"),
+                address: Yup.string().required("Required !"),
               })}
             >
               <Field
@@ -54,29 +57,24 @@ function App() {
                 label="First Name"
                 className="field"
               />
-              <ErrorMessage name="firstName" />
               <Field
                 className="field"
                 name="lastName"
                 component={TextField}
                 label="Last Name"
               />
-              <ErrorMessage name="lastName" />
               <Field
                 className="field"
                 name="fatherName"
                 component={TextField}
                 label="Father Name"
               />
-              <ErrorMessage name="fatherName" />
               <Field
                 className="field"
                 name="age"
-                type="number"
                 component={TextField}
                 label="Age"
               />
-              <ErrorMessage name="age" />
               <Field
                 className="field"
                 fullWidth
@@ -84,9 +82,15 @@ function App() {
                 component={TextField}
                 label="Address"
               />
-              <ErrorMessage name="address" />
             </FormikStep>
-            <FormikStep label="Education Info">
+            <FormikStep
+              label="Education Info"
+              validationSchema={Yup.object({
+                school: Yup.string().required("Required !"),
+                college: Yup.string().required("Required !"),
+                university: Yup.string().required("Required !"),
+              })}
+            >
               <Field
                 className="field"
                 fullWidth
@@ -94,7 +98,6 @@ function App() {
                 component={TextField}
                 label="School Name"
               />
-              <ErrorMessage name="school" />
               <Field
                 className="field"
                 fullWidth
@@ -102,7 +105,6 @@ function App() {
                 component={TextField}
                 label="College Name"
               />
-              <ErrorMessage name="college" />
               <Field
                 className="field"
                 fullWidth
@@ -110,9 +112,14 @@ function App() {
                 component={TextField}
                 label="University Name"
               />
-              <ErrorMessage name="university" />
             </FormikStep>
-            <FormikStep label="Contact Info">
+            <FormikStep
+              label="Contact Info"
+              validationSchema={Yup.object({
+                email: Yup.string().email().required("Required !"),
+                mobileNumber: Yup.string().required("Required !"),
+              })}
+            >
               <Field
                 className="field"
                 name="email"
@@ -120,29 +127,20 @@ function App() {
                 component={TextField}
                 label="Email Address"
               />
-              <ErrorMessage name="email" />
               <Field
                 className="field"
-                type="number"
                 name="mobileNumber"
                 component={TextField}
                 label="Mobile Number"
               />
-              <ErrorMessage name="mobileNumber" />
-              <Field
-                fullWidth
-                className="field"
-                name="postalCode"
-                component={TextField}
-                label="Postal Code"
-              />
-              <ErrorMessage name="postalCode" />
             </FormikStep>
           </FormikStepper>
         </CardContent>
       </Card>
       <footer>
-        <Typography className="footer" variant="h6">Made by Faiz Shahnawaz</Typography>
+        <Typography className="footer" variant="h6">
+          Made by Faiz Shahnawaz
+        </Typography>
       </footer>
     </div>
   );

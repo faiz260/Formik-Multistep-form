@@ -39,10 +39,9 @@ export function FormikStepper({
         if (isLastStep()) {
           await props.onSubmit(values, helpers);
           setCompleted(true);
-          // helpers.resetForm();
-          // setStep(0);
         } else {
           setStep((s) => s + 1);
+          helpers.setTouched({});
         }
       }}
     >
