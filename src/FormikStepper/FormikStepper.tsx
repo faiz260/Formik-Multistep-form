@@ -46,8 +46,8 @@ export function FormikStepper({
         }
       }}
     >
-      {({ isSubmitting }) => (
-        <Form autoComplete="off">
+      {({ isSubmitting, handleSubmit }) => (
+        <Form autoComplete="off" onSubmit={handleSubmit}>
           <Stepper className="stepper" activeStep={step} orientation="vertical">
             {childrenArray.map((child, index) => (
               <Step

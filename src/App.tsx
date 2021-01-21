@@ -1,7 +1,7 @@
 import React from "react";
 import "./App.css";
 import { Field, ErrorMessage } from "formik";
-import { TextField, Card, CardContent } from "@material-ui/core";
+import { TextField, Card, CardContent, Typography } from "@material-ui/core";
 import { FormikStepper, FormikStep } from "./FormikStepper/FormikStepper";
 import * as Yup from "yup";
 
@@ -11,8 +11,13 @@ function App() {
   return (
     <div className="wrapper">
       <nav>
-        <Card>
-          <CardContent></CardContent>
+        <Card className="nav-card">
+          <CardContent>
+            <Typography className="heading" variant="h3">
+              <span> Multistep </span>
+              <span> Form </span>
+            </Typography>
+          </CardContent>
         </Card>
       </nav>
       <Card className="form-card">
@@ -39,8 +44,8 @@ function App() {
             <FormikStep
               label="Personal info"
               validationSchema={Yup.object({
-                // firstName: Yup.string().required("Required !"),
-                // lastName: Yup.string().required("Required !"),
+                firstName: Yup.string().required("Required !"),
+                lastName: Yup.string().required("Required !"),
               })}
             >
               <Field
@@ -111,6 +116,7 @@ function App() {
               <Field
                 className="field"
                 name="email"
+                type="email"
                 component={TextField}
                 label="Email Address"
               />
@@ -135,6 +141,9 @@ function App() {
           </FormikStepper>
         </CardContent>
       </Card>
+      <footer>
+        <Typography className="footer" variant="h6">Made by Faiz Shahnawaz</Typography>
+      </footer>
     </div>
   );
 }
